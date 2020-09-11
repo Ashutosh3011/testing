@@ -16,6 +16,7 @@ import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:maps_launcher/maps_launcher.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flashlight/flashlight.dart';
 
 GoogleMapController mapController;
 CameraPosition _initialLocation =
@@ -62,6 +63,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Image imageFromPreferences;
   bool triggerSwitch;
   List<int> triggerSaved = List();
+  bool _hasFlashlight = false;
 
   StreamSubscription<HardwareButtons.VolumeButtonEvent>
       _volumeButtonSubscription;
@@ -142,6 +144,7 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   void initializeSharedPref() async {
+    initFlashlight();
     _sharedPreferences = await SharedPreferences.getInstance();
     fname = _sharedPreferences.getString('fname') ?? null;
     lname = _sharedPreferences.getString('lname') ?? null;
@@ -156,6 +159,14 @@ class _HomeScreenState extends State<HomeScreen> {
   Future SendNotification(url) async {
     http.Response Response = await http.get(url);
     return Response.body;
+  }
+
+  initFlashlight() async {
+    bool hasFlash = await Flashlight.hasFlashlight;
+    print("Device has flash ? $hasFlash");
+    setState(() {
+      _hasFlashlight = hasFlash;
+    });
   }
 
   void _getCurrentLocation() async {
@@ -407,6 +418,11 @@ class _HomeScreenState extends State<HomeScreen> {
     if (listEquals(triggerSaved, triggerVerify)) {
       print("triggersequence =" + triggerSaved.toString());
       triggerVerify.clear();
+      Text(_hasFlashlight
+          ? 'Your phone has a Flashlight.'
+          : 'Your phone has no Flashlight.');
+      // sosflash();
+
       return Container(
         color: color,
         height: 300,
@@ -414,7 +430,7 @@ class _HomeScreenState extends State<HomeScreen> {
         decoration: BoxDecoration(color: Colors.red),
         child: Center(
           child: Text(
-            "Triggered",
+            "Triggered" + sosflash(),
             style: TextStyle(fontSize: 26),
           ),
         ),
@@ -433,6 +449,37 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ),
       );
+    }
+  }
+
+  sosflash() {
+    print("flashlight is working");
+    sosshort();
+    soslong();
+    sosshort();
+  }
+
+  sosshort() {
+    int i = 0;
+    while (i <= 2) {
+      Flashlight.lightOn();
+      sleep(Duration(milliseconds: 500));
+      Flashlight.lightOff();
+      sleep(Duration(milliseconds: 500));
+
+      i++;
+    }
+  }
+
+  soslong() {
+    int i = 0;
+    while (i <= 2) {
+      Flashlight.lightOn();
+      sleep(Duration(milliseconds: 1500));
+      Flashlight.lightOff();
+      sleep(Duration(milliseconds: 1500));
+
+      i++;
     }
   }
 }

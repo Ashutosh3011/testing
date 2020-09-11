@@ -34,6 +34,7 @@ dependencies:
   path_provider: ^1.6.14
   local_auth: ^0.6.1
   passcode_screen: ^1.2.0
+  flashlight: ^0.1.1
 
 
 dev_dependencies:

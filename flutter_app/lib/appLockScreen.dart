@@ -138,7 +138,7 @@ class _ExampleHomePageState extends State<ExampleHomePage> {
           opaque: opaque,
           pageBuilder: (context, animation, secondaryAnimation) =>
               PasscodeScreen(
-            image: myImage,
+            // image: myImage,
             // image: Image.asset(
             //   myImage,
             //   height: 75,
