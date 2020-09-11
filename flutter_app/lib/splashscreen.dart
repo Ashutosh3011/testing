@@ -18,6 +18,7 @@ class SplashScreenState extends State<SplashScreen>
   var _visible = true;
   SharedPreferences _sharedPreferences;
   int data = 0;
+  bool verified = false;
   AnimationController animationController;
   Animation<double> animation;
   Image iconImage;
@@ -32,7 +33,7 @@ class SplashScreenState extends State<SplashScreen>
     if (data == null) {
       Navigator.of(context).pushReplacementNamed(signIn);
     } else {
-      Navigator.of(context).pushReplacementNamed(homeScreen);
+      forme();
     }
   }
 
@@ -43,7 +44,6 @@ class SplashScreenState extends State<SplashScreen>
   bool isAuthenticated = false;
   @override
   void initState() {
-    // forme();
     myImage = Image.asset('lib/assets/icon.png', height: 75, width: 75);
     initializeSharedPref();
     super.initState();
@@ -72,6 +72,8 @@ class SplashScreenState extends State<SplashScreen>
         localizedReason: "Authenticate to see your bank statement.",
       );
       if (authenticated) {
+        verified = true;
+        Navigator.of(context).pushReplacementNamed(homeScreen);
         print("object");
       }
     } else {
