@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "532908071914",
+    "firebase_url": "https://sentinel-b8212.firebaseio.com",
+    "project_id": "sentinel-b8212",
+    "storage_bucket": "sentinel-b8212.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:532908071914:android:af39917fe4e2e5cf313093",
+        "android_client_info": {
+          "package_name": "com.sentinel.flutterapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "532908071914-n4or131vsc1jjto8d09g3vts2s0shcu4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyApPwgKrAsLj3VjCkAXP9ZCOztqeGa8S50"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "532908071914-n4or131vsc1jjto8d09g3vts2s0shcu4.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
