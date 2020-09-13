@@ -1,6 +1,9 @@
 import 'dart:async';
+import 'package:flutter/services.dart';
+import 'package:local_auth/error_codes.dart' as auth_error;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:local_auth/local_auth.dart';
 import 'package:passcode_screen/circle.dart';
 import 'package:passcode_screen/keyboard.dart';
@@ -67,40 +70,58 @@ class SplashScreenState extends State<SplashScreen>
 
   forme() async {
     int wrongPass = 0;
-    bool weCanCheckBiometrics = await localAuth.canCheckBiometrics;
-    if (weCanCheckBiometrics) {
-      bool authenticated = await localAuth.authenticateWithBiometrics(
-        localizedReason: "Authenticate to see your bank statement.",
-      );
-      if (authenticated) {
-        verified = true;
-        Navigator.of(context).pushReplacementNamed(homeScreen);
-        print("object");
-      } else if (authenticated == false && wrongPass < 3) {
-        wrongPass++;
-      } else if (wrongPass >= 3) {
-        _showLockScreen(
-          context,
-          opaque: false,
-          cancelButton: Text(
-            'Cancel',
-            style: const TextStyle(fontSize: 16, color: Colors.white),
-            semanticsLabel: 'Cancel',
-          ),
-        );
+    bool didAuthenticate = false;
+    // bool weCanCheckBiometrics = await localAuth.canCheckBiometrics;
+    try {
+      didAuthenticate = await localAuth.authenticateWithBiometrics(
+          localizedReason: 'Please authenticate to show account balance');
+    } on PlatformException catch (e) {
+      if (e.code == auth_error.lockedOut) {
+        print(
+            "object!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1");
+        // Handle this exception here.
       }
+    }
+    if (didAuthenticate) {
+      print("Go to HOMEEE");
+      Navigator.of(context).pushNamed(homeScreen);
     } else {
-      _showLockScreen(
-        context,
-        opaque: false,
-        cancelButton: Text(
-          'Cancel',
-          style: const TextStyle(fontSize: 16, color: Colors.white),
-          semanticsLabel: 'Cancel',
-        ),
-      );
-    } //fin
+      print("Go to MOBILE");
+      SystemNavigator.pop();
+      // Navigator.of(context).pushNamed(signIn);
+      // _showLockScreen(
+      //   context,
+      //   opaque: false,
+      //   cancelButton: Text(
+      //     'Cancel',
+      //     style: const TextStyle(fontSize: 16, color: Colors.white),
+      //     semanticsLabel: 'Cancel',
+      //   ),
+      // );
+    }
   }
+  //   if (weCanCheckBiometrics) {
+
+  //     authenticated = await localAuth.authenticateWithBiometrics(
+  //       localizedReason: "Authenticate to Login",
+  //     );
+  //     if (authenticated == true) {
+  //       verified = true;
+  //       Navigator.of(context).pushReplacementNamed(homeScreen);
+  //       print("object");
+  //     } else {
+  //       _showLockScreen(
+  //         context,
+  //         opaque: false,
+  //         cancelButton: Text(
+  //           'Cancel',
+  //           style: const TextStyle(fontSize: 16, color: Colors.white),
+  //           semanticsLabel: 'Cancel',
+  //         ),
+  //       );
+  //     } //fin
+  //   }
+  // }
 
   @override
   void didChangeDependencies() {

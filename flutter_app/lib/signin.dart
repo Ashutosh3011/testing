@@ -5,7 +5,6 @@ import './widgets/custom_shape.dart';
 import './widgets/responsive_ui.dart';
 import './widgets/textformfield.dart';
 
-
 class SignInPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -177,7 +176,7 @@ class _SignInScreenState extends State<SignInScreen> {
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
       onPressed: () {
         mobileValidator();
-        // Navigator.of(context).pushNamed(otpScreen);
+        // Navigator.of(context).pushNamed(homeScreen);
       },
       textColor: Colors.white,
       padding: EdgeInsets.all(0.0),
