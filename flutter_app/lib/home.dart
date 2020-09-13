@@ -295,7 +295,12 @@ class _HomeScreenState extends State<HomeScreen> {
                               19.0423287, 72.9329511);
                         }),
                     SizedBox(height: 50),
-
+                    RaisedButton(
+                      child: Text("New Screen"),
+                      onPressed: () {
+                        Navigator.of(context).pushNamed(lockScreen);
+                      },
+                    ),
                     RaisedButton(
                         child: Text("Get Location"),
                         onPressed: () {

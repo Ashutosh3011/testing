@@ -1,190 +1,433 @@
-import 'dart:async';
-import 'dart:io';
-import 'package:local_auth/local_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:passcode_screen/circle.dart';
-import 'package:passcode_screen/keyboard.dart';
-import 'package:passcode_screen/passcode_screen.dart';
 
-void main() => runApp(MyApp());
-
-class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
+class LockScreen extends StatefulWidget {
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Passcode Lock Screen Example',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: ExampleHomePage(title: 'Passcode Lock Screen Example'),
-    );
-  }
+  _LockScreenState createState() => _LockScreenState();
 }
 
-class ExampleHomePage extends StatefulWidget {
-  ExampleHomePage({Key key, this.title}) : super(key: key);
-  final String title;
-
-  @override
-  State<StatefulWidget> createState() => _ExampleHomePageState();
-}
-
-class _ExampleHomePageState extends State<ExampleHomePage> {
-  final LocalAuthentication localAuth = LocalAuthentication();
-  final StreamController<bool> _verificationNotifier =
-      StreamController<bool>.broadcast();
-  Image myImage;
-  bool isAuthenticated = false;
-  @override
-  void initState() {
-    forme();
-
-    myImage = Image.asset('lib/assets/icon.png', height: 75, width: 75);
-    super.initState();
-  }
-
-  forme() async {
-    bool weCanCheckBiometrics = await localAuth.canCheckBiometrics;
-    if (weCanCheckBiometrics) {
-      bool authenticated = await localAuth.authenticateWithBiometrics(
-        localizedReason: "Authenticate to see your bank statement.",
-      );
-      if (authenticated) {
-        print("object");
-      }
-    } else {
-      _showLockScreen(
-        context,
-        opaque: false,
-        cancelButton: Text(
-          'Cancel',
-          style: const TextStyle(fontSize: 16, color: Colors.white),
-          semanticsLabel: 'Cancel',
-        ),
-      );
-    } //fin
-  }
-
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-
-    precacheImage(myImage.image, context);
-  }
-
+class _LockScreenState extends State<LockScreen> {
+  String inputPin1 = "";
+  String inputPin2 = "";
+  String inputPin3 = "";
+  String inputPin4 = "";
+  int count = 0;
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            // RaisedButton(
-            //   onPressed: () {
-            //     var i = 0;
-            //     while (i <= 10) {
-            //       TorchCompat.turnOn();
-            //       sleep(Duration(seconds: 1));
-            //       TorchCompat.turnOff();
-            //       sleep(Duration(seconds: 1));
-            //       // Flashlight.lightOn();
-            //       i++;
-            //     }
-            //   },
-            // ),
-            Text('You are ${isAuthenticated ? '' : 'NOT'} authenticated'),
-            // _defaultLockScreenButton(context),
-            RaisedButton(onPressed: () async {
-              bool weCanCheckBiometrics = await localAuth.canCheckBiometrics;
-
-              if (weCanCheckBiometrics) {
-                bool authenticated = await localAuth.authenticateWithBiometrics(
-                  localizedReason: "Authenticate to see your bank statement.",
-                );
-                if (authenticated) {
-                  print("object");
-                }
-              } else {
-                _showLockScreen(
-                  context,
-                  opaque: false,
-                  cancelButton: Text(
-                    'Cancel',
-                    style: const TextStyle(fontSize: 16, color: Colors.white),
-                    semanticsLabel: 'Cancel',
-                  ),
-                );
-              } //fingerprint if
-            })
-          ],
-        ),
-      ),
-    );
-  }
-
-  _showLockScreen(BuildContext context,
-      {bool opaque,
-      CircleUIConfig circleUIConfig,
-      KeyboardUIConfig keyboardUIConfig,
-      Widget cancelButton,
-      List<String> digits}) {
-    Navigator.push(
-        context,
-        PageRouteBuilder(
-          opaque: opaque,
-          pageBuilder: (context, animation, secondaryAnimation) =>
-              PasscodeScreen(
-            // image: myImage,
-            // image: Image.asset(
-            //   myImage,
-            //   height: 75,
-            //   width: 75,
-            //   // fit: BoxFit.fitWidth,
-            // ),
-            // image: Image.asset("icon.png"),
-            title: Text(
-              'Enter App Passcode',
-              textAlign: TextAlign.center,
-              style: TextStyle(color: Colors.white, fontSize: 28),
-            ),
-            circleUIConfig: circleUIConfig,
-            keyboardUIConfig: keyboardUIConfig,
-            passwordEnteredCallback: _onPasscodeEntered,
-            cancelButton: cancelButton,
-            deleteButton: Text(
-              'Delete',
-              style: const TextStyle(fontSize: 16, color: Colors.white),
-              semanticsLabel: 'Delete',
-            ),
-            shouldTriggerVerification: _verificationNotifier.stream,
-            backgroundColor: Colors.black.withOpacity(0.8),
-            cancelCallback: _onPasscodeCancelled,
-            digits: digits,
+    return Container(
+      color: Colors.white,
+      // decoration: BoxDecoration(
+      //   image: DecorationImage(
+      //       image: NetworkImage('http://142.93.217.138/Images/icon.png')),
+      // gradient: LinearGradient(
+      //   begin: Alignment.topRight,
+      //   end: Alignment.bottomLeft,
+      //   // stops: [0.1, 0.5, 0.7, 0.9],
+      //   colors: [
+      //     Colors.purple[300], Colors.purple[400],
+      //     // Colors.orange[500],
+      //     // Colors.orange[400],
+      //     // Colors.orange[300],
+      //     // Colors.orange[700],
+      //   ],
+      // ),
+      // ),
+      child: Scaffold(
+        backgroundColor: Colors.transparent,
+        body: Container(
+          padding: EdgeInsets.fromLTRB(10, 110, 10, 50),
+          alignment: Alignment.center,
+          child: Column(
+            children: [
+              // Text(
+              //   "Ashutosh",
+              //   style: TextStyle(fontSize: 40),
+              // ),
+              Image.network(
+                'http://142.93.217.138/Images/icon.png',
+                height: 100,
+                width: 100,
+              ),
+              SizedBox(
+                height: 25,
+              ),
+              pin(),
+              SizedBox(
+                height: 50,
+              ),
+              numberKey(),
+            ],
           ),
-        ));
+        ),
+      ),
+    );
   }
 
-  _onPasscodeEntered(String enteredPasscode) {
-    bool isValid = '123456' == enteredPasscode;
-    _verificationNotifier.add(isValid);
-    if (isValid) {
+  pinStaring() {
+    if (count == 1) {
       setState(() {
-        this.isAuthenticated = isValid;
+        inputPin1 = "*";
+      });
+    } else if (count == 2) {
+      setState(() {
+        inputPin2 = "*";
+      });
+    } else if (count == 3) {
+      setState(() {
+        inputPin3 = "*";
+      });
+    } else if (count == 4) {
+      setState(() {
+        inputPin4 = "*";
+      });
+    } else if (count == 0) {
+      setState(() {
+        inputPin1 = "";
+        inputPin2 = "";
+        inputPin3 = "";
+        inputPin4 = "";
       });
     }
   }
 
-  _onPasscodeCancelled() {
-    Navigator.maybePop(context);
+  Widget pin() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Positioned(
+          child: new PinEntries(
+            onTap: () {},
+            textData: Text(
+              inputPin1,
+              style: TextStyle(fontSize: 40),
+            ),
+          ),
+        ),
+        SizedBox(
+          width: 10,
+        ),
+        Positioned(
+          child: new PinEntries(
+            onTap: () {},
+            textData: Text(
+              inputPin2,
+              style: TextStyle(fontSize: 40),
+            ),
+          ),
+        ),
+        SizedBox(
+          width: 10,
+        ),
+        Positioned(
+          child: new PinEntries(
+            onTap: () {},
+            textData: Text(
+              inputPin3,
+              style: TextStyle(fontSize: 40),
+            ),
+          ),
+        ),
+        SizedBox(
+          width: 10,
+        ),
+        Positioned(
+          child: new PinEntries(
+            onTap: () {},
+            textData: Text(
+              inputPin4,
+              style: TextStyle(fontSize: 40),
+            ),
+          ),
+        ),
+      ],
+    );
   }
 
+  Widget numberKey() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Container(
+          child: Column(
+            children: [
+              Positioned(
+                child: new CircleButton(
+                    onTap: () {
+                      count++;
+                      pinStaring();
+                    },
+                    textData: Text(
+                      "1",
+                      style: TextStyle(fontSize: 40),
+                    )),
+                top: 120.0,
+                left: 10.0,
+              ),
+              SizedBox(
+                height: 15,
+              ),
+              Positioned(
+                child: new CircleButton(
+                    onTap: () {
+                      count++;
+                      pinStaring();
+                    },
+                    textData: Text(
+                      "4",
+                      style: TextStyle(fontSize: 40),
+                    )),
+                top: 120.0,
+                left: 10.0,
+              ),
+              SizedBox(
+                height: 15,
+              ),
+              Positioned(
+                child: new CircleButton(
+                    onTap: () {
+                      count++;
+                      pinStaring();
+                    },
+                    textData: Text(
+                      "7",
+                      style: TextStyle(fontSize: 40),
+                    )),
+                top: 120.0,
+                left: 10.0,
+              ),
+              SizedBox(
+                height: 15,
+              ),
+              Positioned(
+                child: new CircleButton(
+                    onTap: () => print("Back"),
+                    textData: Text(
+                      "",
+                      style: TextStyle(fontSize: 40),
+                    )),
+                top: 120.0,
+                left: 10.0,
+              ),
+            ],
+          ),
+        ),
+        SizedBox(
+          width: 10,
+        ),
+        Container(
+          child: Column(
+            children: [
+              Positioned(
+                child: new CircleButton(
+                    onTap: () {
+                      count++;
+                      pinStaring();
+                    },
+                    textData: Text(
+                      "2",
+                      style: TextStyle(fontSize: 40),
+                    )),
+                top: 120.0,
+                left: 10.0,
+              ),
+              SizedBox(
+                height: 15,
+              ),
+              Positioned(
+                child: new CircleButton(
+                    onTap: () {
+                      count++;
+                      pinStaring();
+                    },
+                    textData: Text(
+                      "5",
+                      style: TextStyle(fontSize: 40),
+                    )),
+                top: 120.0,
+                left: 10.0,
+              ),
+              SizedBox(
+                height: 15,
+              ),
+              Positioned(
+                child: new CircleButton(
+                    onTap: () {
+                      count++;
+                      pinStaring();
+                    },
+                    textData: Text(
+                      "8",
+                      style: TextStyle(fontSize: 40),
+                    )),
+                top: 120.0,
+                left: 10.0,
+              ),
+              SizedBox(
+                height: 15,
+              ),
+              Positioned(
+                child: new CircleButton(
+                    onTap: () {
+                      count++;
+                      pinStaring();
+                    },
+                    textData: Text(
+                      "0",
+                      style: TextStyle(fontSize: 40),
+                    )),
+                top: 120.0,
+                left: 10.0,
+              ),
+            ],
+          ),
+        ),
+        SizedBox(
+          width: 10,
+        ),
+        Container(
+          child: Column(
+            children: [
+              Positioned(
+                child: new CircleButton(
+                    onTap: () {
+                      count++;
+                      pinStaring();
+                    },
+                    textData: Text(
+                      "3",
+                      style: TextStyle(fontSize: 40),
+                    )),
+                top: 120.0,
+                left: 10.0,
+              ),
+              SizedBox(
+                height: 15,
+              ),
+              Positioned(
+                child: new CircleButton(
+                    onTap: () {
+                      count++;
+                      pinStaring();
+                    },
+                    textData: Text(
+                      "6",
+                      style: TextStyle(fontSize: 40),
+                    )),
+                top: 120.0,
+                left: 10.0,
+              ),
+              SizedBox(
+                height: 15,
+              ),
+              Positioned(
+                child: new CircleButton(
+                    onTap: () {
+                      count++;
+                      pinStaring();
+                    },
+                    textData: Text(
+                      "9",
+                      style: TextStyle(fontSize: 40),
+                    )),
+                top: 120.0,
+                left: 10.0,
+              ),
+              SizedBox(
+                height: 15,
+              ),
+              Positioned(
+                child: new CircleButton(
+                    onTap: () {
+                      count = 0;
+                      pinStaring();
+                      //add System.pop()
+                    },
+                    textData: Text(
+                      "Cancel",
+                      style: TextStyle(fontSize: 24),
+                    )),
+                top: 120.0,
+                left: 10.0,
+              ),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class CircleButton extends StatelessWidget {
+  final GestureTapCallback onTap;
+  final Text textData;
+
+  const CircleButton({Key key, this.onTap, this.textData}) : super(key: key);
+
   @override
-  void dispose() {
-    _verificationNotifier.close();
-    super.dispose();
+  Widget build(BuildContext context) {
+    double size = 85.0;
+
+    return new InkResponse(
+      onTap: onTap,
+      child: new Container(
+        alignment: Alignment.center,
+        width: size,
+        height: size,
+        decoration: new BoxDecoration(
+          // color: Colors.orange,
+          // gradient: LinearGradient(
+          //   begin: Alignment.topRight,
+          //   end: Alignment.bottomLeft,
+          //   // stops: [0, 0.5, 0.7, 0.9],
+          //   colors: [
+          //     Colors.orange[500],
+          //     Colors.orange[400],
+          //     Colors.orange[300],
+          //     Colors.orange[700],
+          //   ],
+          // ),
+          shape: BoxShape.circle,
+        ),
+        child: textData,
+      ),
+    );
+  }
+}
+
+class PinEntries extends StatelessWidget {
+  final GestureTapCallback onTap;
+  final Text textData;
+
+  const PinEntries({Key key, this.onTap, this.textData}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    double size = 65.0;
+
+    return new InkResponse(
+      onTap: onTap,
+      child: new Container(
+        alignment: Alignment.center,
+        width: size,
+        height: size,
+        decoration: new BoxDecoration(
+          // color: Colors.green[200],
+          shape: BoxShape.rectangle,
+          borderRadius: BorderRadius.circular(25),
+          // gradient: LinearGradient(
+          //   begin: Alignment.topRight,
+          //   end: Alignment.bottomLeft,
+          //   // stops: [0.1, 0.5, 0.7, 0.9],
+          //   colors: [
+          //     Colors.purple, Colors.purple[200],
+          //     // Colors.orange[500],
+          //     // Colors.orange[400],
+          //     // Colors.orange[300],
+          //     // Colors.orange[700],
+          //   ],
+          // ),
+        ),
+        child: textData,
+      ),
+    );
   }
 }

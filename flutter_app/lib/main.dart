@@ -1,18 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_foreground_plugin_example/profile_display.dart';
-
 import 'package:geolocator/geolocator.dart';
 import './home.dart';
 import './opt_verify.dart';
 import './settings.dart';
 import './Database/location_send.dart';
+import 'appLockScreen.dart';
 import 'customtrigger.dart';
 import './constants.dart';
 import './signin.dart';
 import './profile.dart';
+import './profile_display.dart';
 import './splashscreen.dart';
-// import 'package:provider/provider.dart';
 import 'package:flutter_foreground_plugin/flutter_foreground_plugin.dart';
 
 void main() => runApp(MyApp());
@@ -55,6 +54,7 @@ class _MyAppState extends State<MyApp> {
         settingsScreen: (BuildContext context) => SettingsScreen(),
         customTriggerScreen: (BuildContext context) => CustomTriggerPage(),
         profileDisplay: (BuildContext context) => ProfileDisplay(),
+        lockScreen: (BuildContext context) => LockScreen(),
       },
       initialRoute: splashScreen,
     );

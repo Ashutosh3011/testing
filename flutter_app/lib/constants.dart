@@ -6,3 +6,4 @@ final String homeScreen = 'homeScreen';
 final String settingsScreen = 'SettingsScreen';
 final String customTriggerScreen = 'customTriggerScreen';
 final String profileDisplay = 'profileDisplay';
+final String lockScreen = 'lockScreen';
