@@ -79,12 +79,12 @@ void startForegroundService() async {
 }
 
 Future<void> globalForegroundService() async {
-  final position = await Geolocator()
-      .getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
-  String latitude = position.latitude.toString();
-  String longitude = position.longitude.toString();
-  print(position.latitude);
-  print(position.longitude);
-  PostServices.addLocation(mobileNumber, latitude, longitude);
-  debugPrint("current datetime is ${DateTime.now()}");
+  // final position = await Geolocator()
+  //     .getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
+  // String latitude = position.latitude.toString();
+  // String longitude = position.longitude.toString();
+  // print(position.latitude);
+  // print(position.longitude);
+  // PostServices.addLocation(mobileNumber, latitude, longitude);
+  // debugPrint("current datetime is ${DateTime.now()}");
 }

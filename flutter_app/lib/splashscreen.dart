@@ -66,6 +66,7 @@ class SplashScreenState extends State<SplashScreen>
   }
 
   forme() async {
+    int wrongPass = 0;
     bool weCanCheckBiometrics = await localAuth.canCheckBiometrics;
     if (weCanCheckBiometrics) {
       bool authenticated = await localAuth.authenticateWithBiometrics(
@@ -75,6 +76,18 @@ class SplashScreenState extends State<SplashScreen>
         verified = true;
         Navigator.of(context).pushReplacementNamed(homeScreen);
         print("object");
+      } else if (authenticated == false && wrongPass < 3) {
+        wrongPass++;
+      } else if (wrongPass >= 3) {
+        _showLockScreen(
+          context,
+          opaque: false,
+          cancelButton: Text(
+            'Cancel',
+            style: const TextStyle(fontSize: 16, color: Colors.white),
+            semanticsLabel: 'Cancel',
+          ),
+        );
       }
     } else {
       _showLockScreen(
