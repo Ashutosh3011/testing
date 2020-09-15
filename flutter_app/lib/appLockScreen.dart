@@ -11,6 +11,7 @@ class _LockScreenState extends State<LockScreen> {
   String inputPin3 = "";
   String inputPin4 = "";
   int count = 0;
+  String otpMatch = "";
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -93,49 +94,41 @@ class _LockScreenState extends State<LockScreen> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Positioned(
-          child: new PinEntries(
-            onTap: () {},
-            textData: Text(
-              inputPin1,
-              style: TextStyle(fontSize: 40),
-            ),
+        PinEntries(
+          onTap: () {},
+          textData: Text(
+            inputPin1,
+            style: TextStyle(fontSize: 40),
           ),
         ),
         SizedBox(
           width: 10,
         ),
-        Positioned(
-          child: new PinEntries(
-            onTap: () {},
-            textData: Text(
-              inputPin2,
-              style: TextStyle(fontSize: 40),
-            ),
+        PinEntries(
+          onTap: () {},
+          textData: Text(
+            inputPin2,
+            style: TextStyle(fontSize: 40),
           ),
         ),
         SizedBox(
           width: 10,
         ),
-        Positioned(
-          child: new PinEntries(
-            onTap: () {},
-            textData: Text(
-              inputPin3,
-              style: TextStyle(fontSize: 40),
-            ),
+        PinEntries(
+          onTap: () {},
+          textData: Text(
+            inputPin3,
+            style: TextStyle(fontSize: 40),
           ),
         ),
         SizedBox(
           width: 10,
         ),
-        Positioned(
-          child: new PinEntries(
-            onTap: () {},
-            textData: Text(
-              inputPin4,
-              style: TextStyle(fontSize: 40),
-            ),
+        PinEntries(
+          onTap: () {},
+          textData: Text(
+            inputPin4,
+            style: TextStyle(fontSize: 40),
           ),
         ),
       ],
@@ -143,213 +136,191 @@ class _LockScreenState extends State<LockScreen> {
   }
 
   Widget numberKey() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
+    return Stack(
       children: [
-        Container(
-          child: Column(
-            children: [
-              Positioned(
-                child: new CircleButton(
-                    onTap: () {
-                      count++;
-                      pinStaring();
-                    },
-                    textData: Text(
-                      "1",
-                      style: TextStyle(fontSize: 40),
-                    )),
-                top: 120.0,
-                left: 10.0,
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Container(
+              child: Column(
+                children: [
+                  CircleButton(
+                      onTap: () {
+                        count++;
+                        pinStaring();
+                        otpMatch = otpMatch + "1";
+                        print(otpMatch);
+                      },
+                      textData: Text(
+                        "1",
+                        style: TextStyle(fontSize: 40),
+                      )),
+                  SizedBox(
+                    height: 15,
+                  ),
+                  CircleButton(
+                      onTap: () {
+                        count++;
+                        pinStaring();
+                        otpMatch = otpMatch + "4";
+                        print(otpMatch);
+                      },
+                      textData: Text(
+                        "4",
+                        style: TextStyle(fontSize: 40),
+                      )),
+                  SizedBox(
+                    height: 15,
+                  ),
+                  CircleButton(
+                      onTap: () {
+                        count++;
+                        pinStaring();
+                        otpMatch = otpMatch + "";
+                        print(otpMatch);
+                      },
+                      textData: Text(
+                        "7",
+                        style: TextStyle(fontSize: 40),
+                      )),
+                  SizedBox(
+                    height: 15,
+                  ),
+                  CircleButton(
+                      onTap: () => print("Back"),
+                      textData: Text(
+                        "",
+                        style: TextStyle(fontSize: 40),
+                      )),
+                ],
               ),
-              SizedBox(
-                height: 15,
+            ),
+            SizedBox(
+              width: 10,
+            ),
+            Container(
+              child: Column(
+                children: [
+                  CircleButton(
+                      onTap: () {
+                        count++;
+                        pinStaring();
+                        otpMatch = otpMatch + "2";
+                        print(otpMatch);
+                      },
+                      textData: Text(
+                        "2",
+                        style: TextStyle(fontSize: 40),
+                      )),
+                  SizedBox(
+                    height: 15,
+                  ),
+                  CircleButton(
+                      onTap: () {
+                        count++;
+                        pinStaring();
+                        otpMatch = otpMatch + "5";
+                        print(otpMatch);
+                      },
+                      textData: Text(
+                        "5",
+                        style: TextStyle(fontSize: 40),
+                      )),
+                  SizedBox(
+                    height: 15,
+                  ),
+                  CircleButton(
+                      onTap: () {
+                        count++;
+                        pinStaring();
+                        otpMatch = otpMatch + "8";
+                        print(otpMatch);
+                      },
+                      textData: Text(
+                        "8",
+                        style: TextStyle(fontSize: 40),
+                      )),
+                  SizedBox(
+                    height: 15,
+                  ),
+                  CircleButton(
+                      onTap: () {
+                        count++;
+                        pinStaring();
+                        otpMatch = otpMatch + "0";
+                        print(otpMatch);
+                      },
+                      textData: Text(
+                        "0",
+                        style: TextStyle(fontSize: 40),
+                      )),
+                ],
               ),
-              Positioned(
-                child: new CircleButton(
-                    onTap: () {
-                      count++;
-                      pinStaring();
-                    },
-                    textData: Text(
-                      "4",
-                      style: TextStyle(fontSize: 40),
-                    )),
-                top: 120.0,
-                left: 10.0,
+            ),
+            SizedBox(
+              width: 10,
+            ),
+            Container(
+              child: Column(
+                children: [
+                  CircleButton(
+                      onTap: () {
+                        count++;
+                        pinStaring();
+                        otpMatch = otpMatch + "3";
+                        print(otpMatch);
+                      },
+                      textData: Text(
+                        "3",
+                        style: TextStyle(fontSize: 40),
+                      )),
+                  SizedBox(
+                    height: 15,
+                  ),
+                  CircleButton(
+                      onTap: () {
+                        count++;
+                        pinStaring();
+                        otpMatch = otpMatch + "6";
+                        print(otpMatch);
+                      },
+                      textData: Text(
+                        "6",
+                        style: TextStyle(fontSize: 40),
+                      )),
+                  SizedBox(
+                    height: 15,
+                  ),
+                  CircleButton(
+                      onTap: () {
+                        count++;
+                        pinStaring();
+                        otpMatch = otpMatch + "9";
+                        print(otpMatch);
+                      },
+                      textData: Text(
+                        "9",
+                        style: TextStyle(fontSize: 40),
+                      )),
+                  SizedBox(
+                    height: 15,
+                  ),
+                  CircleButton(
+                      onTap: () {
+                        count = 0;
+                        pinStaring();
+                        otpMatch = "";
+                        print(otpMatch);
+                        //add System.pop()
+                      },
+                      textData: Text(
+                        "Cancel",
+                        style: TextStyle(fontSize: 24),
+                      )),
+                ],
               ),
-              SizedBox(
-                height: 15,
-              ),
-              Positioned(
-                child: new CircleButton(
-                    onTap: () {
-                      count++;
-                      pinStaring();
-                    },
-                    textData: Text(
-                      "7",
-                      style: TextStyle(fontSize: 40),
-                    )),
-                top: 120.0,
-                left: 10.0,
-              ),
-              SizedBox(
-                height: 15,
-              ),
-              Positioned(
-                child: new CircleButton(
-                    onTap: () => print("Back"),
-                    textData: Text(
-                      "",
-                      style: TextStyle(fontSize: 40),
-                    )),
-                top: 120.0,
-                left: 10.0,
-              ),
-            ],
-          ),
-        ),
-        SizedBox(
-          width: 10,
-        ),
-        Container(
-          child: Column(
-            children: [
-              Positioned(
-                child: new CircleButton(
-                    onTap: () {
-                      count++;
-                      pinStaring();
-                    },
-                    textData: Text(
-                      "2",
-                      style: TextStyle(fontSize: 40),
-                    )),
-                top: 120.0,
-                left: 10.0,
-              ),
-              SizedBox(
-                height: 15,
-              ),
-              Positioned(
-                child: new CircleButton(
-                    onTap: () {
-                      count++;
-                      pinStaring();
-                    },
-                    textData: Text(
-                      "5",
-                      style: TextStyle(fontSize: 40),
-                    )),
-                top: 120.0,
-                left: 10.0,
-              ),
-              SizedBox(
-                height: 15,
-              ),
-              Positioned(
-                child: new CircleButton(
-                    onTap: () {
-                      count++;
-                      pinStaring();
-                    },
-                    textData: Text(
-                      "8",
-                      style: TextStyle(fontSize: 40),
-                    )),
-                top: 120.0,
-                left: 10.0,
-              ),
-              SizedBox(
-                height: 15,
-              ),
-              Positioned(
-                child: new CircleButton(
-                    onTap: () {
-                      count++;
-                      pinStaring();
-                    },
-                    textData: Text(
-                      "0",
-                      style: TextStyle(fontSize: 40),
-                    )),
-                top: 120.0,
-                left: 10.0,
-              ),
-            ],
-          ),
-        ),
-        SizedBox(
-          width: 10,
-        ),
-        Container(
-          child: Column(
-            children: [
-              Positioned(
-                child: new CircleButton(
-                    onTap: () {
-                      count++;
-                      pinStaring();
-                    },
-                    textData: Text(
-                      "3",
-                      style: TextStyle(fontSize: 40),
-                    )),
-                top: 120.0,
-                left: 10.0,
-              ),
-              SizedBox(
-                height: 15,
-              ),
-              Positioned(
-                child: new CircleButton(
-                    onTap: () {
-                      count++;
-                      pinStaring();
-                    },
-                    textData: Text(
-                      "6",
-                      style: TextStyle(fontSize: 40),
-                    )),
-                top: 120.0,
-                left: 10.0,
-              ),
-              SizedBox(
-                height: 15,
-              ),
-              Positioned(
-                child: new CircleButton(
-                    onTap: () {
-                      count++;
-                      pinStaring();
-                    },
-                    textData: Text(
-                      "9",
-                      style: TextStyle(fontSize: 40),
-                    )),
-                top: 120.0,
-                left: 10.0,
-              ),
-              SizedBox(
-                height: 15,
-              ),
-              Positioned(
-                child: new CircleButton(
-                    onTap: () {
-                      count = 0;
-                      pinStaring();
-                      //add System.pop()
-                    },
-                    textData: Text(
-                      "Cancel",
-                      style: TextStyle(fontSize: 24),
-                    )),
-                top: 120.0,
-                left: 10.0,
-              ),
-            ],
-          ),
+            ),
+          ],
         ),
       ],
     );
