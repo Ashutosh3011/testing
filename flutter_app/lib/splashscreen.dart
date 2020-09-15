@@ -26,6 +26,7 @@ class SplashScreenState extends State<SplashScreen>
   Animation<double> animation;
   Image iconImage;
   Image logoImage;
+  bool didAuthenticate = false;
 
   startTime() async {
     var _duration = new Duration(seconds: 3);
@@ -81,6 +82,9 @@ class SplashScreenState extends State<SplashScreen>
         Navigator.of(context).pushNamed(lockScreen);
         // Handle this exception here.
       }
+      // else if(didAuthenticate) {
+      //   Navigator.of(context).pushNamed(homeScreen);
+      // }
     }
     if (didAuthenticate == true) {
       print("Go to HOMEEE");

@@ -25,7 +25,7 @@ class LocationSender {
     mobileNumber = _sharedPreferences.getString('mobile') ?? null;
     print(position.latitude);
     print(position.longitude);
-    // PostServices.addLocation(mobileNumber, latitude, longitude);
+    PostServices.addLocation(mobileNumber, latitude, longitude);
   }
 }
 
