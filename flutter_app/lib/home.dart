@@ -2,6 +2,8 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
+import 'package:audioplayers/audio_cache.dart';
+import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
@@ -64,6 +66,8 @@ class _HomeScreenState extends State<HomeScreen> {
   bool triggerSwitch;
   List<int> triggerSaved = List();
   bool _hasFlashlight = false;
+  AudioPlayer instance;
+  AudioCache musicCache;
 
   StreamSubscription<HardwareButtons.VolumeButtonEvent>
       _volumeButtonSubscription;
@@ -401,6 +405,8 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Widget triggernew() {
+    pauseMusic();
+
     if (volumeUpCount == 1) {
       triggerVerify.add(1);
     } else if (volumeDownCount == 1) {
@@ -421,7 +427,8 @@ class _HomeScreenState extends State<HomeScreen> {
       Text(_hasFlashlight
           ? 'Your phone has a Flashlight.'
           : 'Your phone has no Flashlight.');
-      // sosflash();
+      sosflash();
+      // pauseMusic();
 
       return Container(
         color: color,
@@ -430,7 +437,7 @@ class _HomeScreenState extends State<HomeScreen> {
         decoration: BoxDecoration(color: Colors.red),
         child: Center(
           child: Text(
-            "Triggered" + sosflash(),
+            "Triggered",
             style: TextStyle(fontSize: 26),
           ),
         ),
@@ -452,8 +459,15 @@ class _HomeScreenState extends State<HomeScreen> {
     }
   }
 
-  sosflash() {
+  sosflash() async {
     print("flashlight is working");
+    // playLoopedMusic();
+    // AudioCache musicCache;
+    // AudioPlayer instance;
+    print("loop");
+    musicCache = AudioCache(prefix: "lib/assets/");
+    instance = await musicCache.loop("audio.mp3");
+
     sosshort();
     soslong();
     sosshort();
@@ -480,6 +494,22 @@ class _HomeScreenState extends State<HomeScreen> {
       sleep(Duration(milliseconds: 1500));
 
       i++;
+    }
+  }
+
+  // void playLoopedMusic() async {
+  //   AudioCache musicCache;
+  //   // AudioPlayer instance;
+  //   print("loop");
+
+  //   musicCache = AudioCache(prefix: "lib/assets/");
+  //   instance = await musicCache.loop("audio.mp3");
+  //   // await instance.setVolume(0.5); you can even set the volume
+  // }
+
+  void pauseMusic() {
+    if (instance != null) {
+      instance.pause();
     }
   }
 }

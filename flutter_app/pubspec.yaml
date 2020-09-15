@@ -35,6 +35,7 @@ dependencies:
   local_auth: ^0.6.1
   passcode_screen: ^1.2.0
   flashlight: ^0.1.1
+  audioplayers: ^0.16.0
 
 
 dev_dependencies:
@@ -62,6 +63,7 @@ flutter:
    -  lib/assets/icon.png
    -  lib/assets/iwlogo1.png
    -  lib/assets/iwicon.png
+   -  lib/assets/audio.mp3
 
 
   # An image asset can refer to one or more resolution-specific "variants", see

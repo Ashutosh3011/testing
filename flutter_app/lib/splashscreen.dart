@@ -26,6 +26,7 @@ class SplashScreenState extends State<SplashScreen>
   Animation<double> animation;
   Image iconImage;
   Image logoImage;
+  bool didAuthenticate = false;
 
   startTime() async {
     var _duration = new Duration(seconds: 3);
@@ -70,7 +71,7 @@ class SplashScreenState extends State<SplashScreen>
 
   forme() async {
     int wrongPass = 0;
-    bool didAuthenticate = false;
+
     // bool weCanCheckBiometrics = await localAuth.canCheckBiometrics;
     try {
       didAuthenticate = await localAuth.authenticateWithBiometrics(
@@ -79,15 +80,20 @@ class SplashScreenState extends State<SplashScreen>
       if (e.code == auth_error.lockedOut) {
         print(
             "object!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1");
+        SystemNavigator.pop();
         // Handle this exception here.
       }
+      // else if(didAuthenticate) {
+      //   Navigator.of(context).pushNamed(homeScreen);
+      // }
     }
     if (didAuthenticate) {
       print("Go to HOMEEE");
       Navigator.of(context).pushNamed(homeScreen);
     } else {
       print("Go to MOBILE");
-      SystemNavigator.pop();
+      // SystemNavigator.pop();
+
       // Navigator.of(context).pushNamed(signIn);
       // _showLockScreen(
       //   context,
