@@ -89,7 +89,7 @@ class SplashScreenState extends State<SplashScreen>
     if (didAuthenticate == true) {
       print("Go to HOMEEE");
       Navigator.of(context).pushNamed(homeScreen);
-    } else if (didAuthenticate == null) {
+    } else if (didAuthenticate == false) {
       Navigator.of(context).pushNamed(lockScreen);
       print("CANCEL PRESSED SO EXITING APP ");
       // SystemNavigator.pop();

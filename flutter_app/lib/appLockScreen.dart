@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_foreground_plugin_example/constants.dart';
 
@@ -13,9 +15,14 @@ class _LockScreenState extends State<LockScreen> {
   String inputPin4 = "";
   int count = 0;
   String otpMatch = "";
+
   @override
   Widget build(BuildContext context) {
+    var height = MediaQuery.of(context).size.height;
+    var width = MediaQuery.of(context).size.width;
     return Container(
+      padding:
+          EdgeInsets.fromLTRB(width / 12, height / 8, width / 10, height / 100),
       color: Colors.white,
       // decoration: BoxDecoration(
       //   image: DecorationImage(
@@ -36,7 +43,7 @@ class _LockScreenState extends State<LockScreen> {
       child: Scaffold(
         backgroundColor: Colors.transparent,
         body: Container(
-          padding: EdgeInsets.fromLTRB(10, 110, 10, 50),
+          // padding: EdgeInsets.fromLTRB(10, 110, 10, 50),
           alignment: Alignment.center,
           child: Column(
             children: [
@@ -44,18 +51,18 @@ class _LockScreenState extends State<LockScreen> {
               //   "Ashutosh",
               //   style: TextStyle(fontSize: 40),
               // ),
-              Image.network(
-                'http://142.93.217.138/Images/icon.png',
-                height: 100,
-                width: 100,
+              Image.asset(
+                'lib/assets/icon.png',
+                height: height / 7,
+                width: width / 2,
               ),
               SizedBox(
-                height: 25,
+                height: height / 8,
               ),
               pin(),
-              SizedBox(
-                height: 50,
-              ),
+              // SizedBox(
+              //   height: 50,
+              // ),
               numberKey(),
             ],
           ),
@@ -65,6 +72,7 @@ class _LockScreenState extends State<LockScreen> {
   }
 
   pinStaring() {
+    print(count);
     if (count == 1) {
       setState(() {
         inputPin1 = "*";
@@ -80,6 +88,7 @@ class _LockScreenState extends State<LockScreen> {
     } else if (count == 4) {
       setState(() {
         inputPin4 = "*";
+        count = 0;
       });
     } else if (count == 0) {
       setState(() {
@@ -89,8 +98,20 @@ class _LockScreenState extends State<LockScreen> {
         inputPin4 = "";
       });
     }
-    if (otpMatch == "1234") {
+    if (otpMatch.length == 4 && otpMatch == "1234") {
       Navigator.of(context).pushNamed(homeScreen);
+      otpMatch = "";
+      count = 0;
+    } else if (otpMatch.length == 4 && otpMatch != "1234") {
+      // sleep(Duration(milliseconds: 1000));
+      setState(() {
+        count = 0;
+        otpMatch = "";
+        inputPin1 = "";
+        inputPin2 = "";
+        inputPin3 = "";
+        inputPin4 = "";
+      });
     }
   }
 
@@ -179,7 +200,7 @@ class _LockScreenState extends State<LockScreen> {
                   CircleButton(
                       onTap: () {
                         count++;
-                        otpMatch = otpMatch + "";
+                        otpMatch = otpMatch + "7";
                         print(otpMatch);
                         pinStaring();
                       },

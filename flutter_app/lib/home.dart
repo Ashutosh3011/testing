@@ -476,29 +476,47 @@ class _HomeScreenState extends State<HomeScreen> {
     instance = await musicCache.loop("audio.mp3");
 
     sosshort();
-    soslong();
+    // soslong();
     sosshort();
   }
 
-  sosshort() {
+  sosshort() async {
     int i = 0;
     while (i <= 2) {
-      Flashlight.lightOn();
-      sleep(Duration(milliseconds: 500));
-      Flashlight.lightOff();
-      sleep(Duration(milliseconds: 500));
+      Future.delayed(const Duration(milliseconds: 500), () {
+        Flashlight.lightOn();
+        // Here you can write your code
+        setState(() {
+          // Here you can write your code for open new view
+        });
+      });
+      Future.delayed(const Duration(milliseconds: 500), () {
+        Flashlight.lightOff();
+        // Here you can write your code
+        setState(() {
+          // Here you can write your code for open new view
+        });
+      });
 
-      i++;
+      // await new Future.delayed(const Duration(milliseconds: 100));
+      // // sleep(Duration(milliseconds: 500));
+      // Flashlight.lightOff();
+      // await new Future.delayed(const Duration(milliseconds: 100));
+      // // sleep(Duration(milliseconds: 500));
+
+      // i++;
     }
   }
 
-  soslong() {
+  soslong() async {
     int i = 0;
     while (i <= 2) {
       Flashlight.lightOn();
-      sleep(Duration(milliseconds: 1500));
+      await new Future.delayed(const Duration(milliseconds: 1500));
+      // sleep(Duration(milliseconds: 1500));
       Flashlight.lightOff();
-      sleep(Duration(milliseconds: 1500));
+      await new Future.delayed(const Duration(seconds: 1500));
+      // sleep(Duration(milliseconds: 1500));
 
       i++;
     }
