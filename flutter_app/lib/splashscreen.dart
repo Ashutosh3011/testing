@@ -70,30 +70,29 @@ class SplashScreenState extends State<SplashScreen>
   }
 
   forme() async {
-    int wrongPass = 0;
-
+    // int wrongPass = 0;
+    bool didAuthenticate;
     // bool weCanCheckBiometrics = await localAuth.canCheckBiometrics;
     try {
       didAuthenticate = await localAuth.authenticateWithBiometrics(
-          localizedReason: 'Please authenticate to show account balance');
+          localizedReason: 'Please authenticate');
     } on PlatformException catch (e) {
       if (e.code == auth_error.lockedOut) {
-        print(
-            "object!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1");
-        SystemNavigator.pop();
+        print("LOCKED OUT GGOOOOO  CUSTOM SCREEN");
+        Navigator.of(context).pushNamed(lockScreen);
         // Handle this exception here.
       }
       // else if(didAuthenticate) {
       //   Navigator.of(context).pushNamed(homeScreen);
       // }
     }
-    if (didAuthenticate) {
+    if (didAuthenticate == true) {
       print("Go to HOMEEE");
-      Navigator.of(context).pushNamed(homeScreen);
-    } else {
-      print("Go to MOBILE");
+      Navigator.of(context).pushNamed(lockScreen);
+    } else if (didAuthenticate == null) {
+      Navigator.of(context).pushNamed(lockScreen);
+      print("CANCEL PRESSED SO EXITING APP ");
       // SystemNavigator.pop();
-
       // Navigator.of(context).pushNamed(signIn);
       // _showLockScreen(
       //   context,

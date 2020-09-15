@@ -4,6 +4,8 @@ import 'dart:io';
 import 'dart:typed_data';
 import 'package:audioplayers/audio_cache.dart';
 import 'package:audioplayers/audioplayers.dart';
+
+import 'dart:ui';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
@@ -299,7 +301,12 @@ class _HomeScreenState extends State<HomeScreen> {
                               19.0423287, 72.9329511);
                         }),
                     SizedBox(height: 50),
-
+                    RaisedButton(
+                      child: Text("New Screen"),
+                      onPressed: () {
+                        Navigator.of(context).pushNamed(lockScreen);
+                      },
+                    ),
                     RaisedButton(
                         child: Text("Get Location"),
                         onPressed: () {
