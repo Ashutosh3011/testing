@@ -312,9 +312,9 @@ class _HomeScreenState extends State<HomeScreen> {
                         child: Text("Get Location"),
                         onPressed: () {
                           _getCurrentLocation();
-                          tcount = 0;
-                          fcount = 0;
-                          sosflash();
+                          // tcount = 0;
+                          // fcount = 0;
+                          // sosflash();
 
                           // OneSignalAPI.configOneSignal();
                           // SendNotification("http://142.93.217.138/development/execution.php");
@@ -438,6 +438,8 @@ class _HomeScreenState extends State<HomeScreen> {
       Text(_hasFlashlight
           ? 'Your phone has a Flashlight.'
           : 'Your phone has no Flashlight.');
+      tcount = 0;
+      fcount = 0;
       sosflash();
       // pauseMusic();
 
@@ -486,20 +488,20 @@ class _HomeScreenState extends State<HomeScreen> {
 // TorchCompat.turnOn();
 // TorchCompat.turnOff();
     Timer.periodic(const Duration(seconds: 1), (timer1) {
-      if (tcount >= 9) {
+      if (tcount >= 5) {
         timer1.cancel();
       }
       // Flashlight.lightOn();
-      // TorchCompat.turnOn();
+      TorchCompat.turnOn();
       tcount++;
       print(tcount);
     });
     Timer.periodic(const Duration(seconds: 2), (timer2) {
-      if (fcount >= 10) {
+      if (fcount >= 5) {
         timer2.cancel();
       }
       // Flashlight.lightOff();
-      // TorchCompat.turnOff();
+      TorchCompat.turnOff();
       fcount++;
       print(fcount);
     });
@@ -520,13 +522,15 @@ class _HomeScreenState extends State<HomeScreen> {
     // }
   }
 
-  soslong() {
+  soslong() async {
     int i = 0;
     while (i <= 2) {
       Flashlight.lightOn();
-      sleep(Duration(milliseconds: 1500));
+      await new Future.delayed(const Duration(milliseconds: 1500));
+      // sleep(Duration(milliseconds: 1500));
       Flashlight.lightOff();
-      sleep(Duration(milliseconds: 1500));
+      await new Future.delayed(const Duration(seconds: 1500));
+      // sleep(Duration(milliseconds: 1500));
 
       i++;
     }
