@@ -36,6 +36,7 @@ dependencies:
   passcode_screen: ^1.2.0
   flashlight: ^0.1.1
   audioplayers: ^0.16.0
+  torch_compat: ^1.0.2
 
 
 dev_dependencies:

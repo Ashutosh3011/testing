@@ -4,7 +4,7 @@ import 'dart:io';
 import 'dart:typed_data';
 import 'package:audioplayers/audio_cache.dart';
 import 'package:audioplayers/audioplayers.dart';
-
+import 'package:torch_compat/torch_compat.dart';
 import 'dart:ui';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
@@ -70,6 +70,7 @@ class _HomeScreenState extends State<HomeScreen> {
   bool _hasFlashlight = false;
   AudioPlayer instance;
   AudioCache musicCache;
+  int fcount = 0, tcount = 0;
 
   StreamSubscription<HardwareButtons.VolumeButtonEvent>
       _volumeButtonSubscription;
@@ -311,6 +312,9 @@ class _HomeScreenState extends State<HomeScreen> {
                         child: Text("Get Location"),
                         onPressed: () {
                           _getCurrentLocation();
+                          tcount = 0;
+                          fcount = 0;
+                          sosflash();
 
                           // OneSignalAPI.configOneSignal();
                           // SendNotification("http://142.93.217.138/development/execution.php");
@@ -468,28 +472,52 @@ class _HomeScreenState extends State<HomeScreen> {
 
   sosflash() async {
     print("flashlight is working");
+
     // playLoopedMusic();
     // AudioCache musicCache;
     // AudioPlayer instance;
-    print("loop");
-    musicCache = AudioCache(prefix: "lib/assets/");
-    instance = await musicCache.loop("audio.mp3");
 
-    sosshort();
-    soslong();
-    sosshort();
+    print("loop");
+
+    // musicCache = AudioCache(prefix: "lib/assets/");
+    // instance = await musicCache.loop("audio.mp3");
+    // timer = Timer.periodic(Duration(seconds: 2), (Timer t) => Flashlight.lightOn());
+    // timer = Timer.periodic(Duration(seconds: 2), (Timer t) => sosshort());
+// TorchCompat.turnOn();
+// TorchCompat.turnOff();
+    Timer.periodic(const Duration(seconds: 1), (timer1) {
+      if (tcount >= 9) {
+        timer1.cancel();
+      }
+      // Flashlight.lightOn();
+      // TorchCompat.turnOn();
+      tcount++;
+      print(tcount);
+    });
+    Timer.periodic(const Duration(seconds: 2), (timer2) {
+      if (fcount >= 10) {
+        timer2.cancel();
+      }
+      // Flashlight.lightOff();
+      // TorchCompat.turnOff();
+      fcount++;
+      print(fcount);
+    });
+
+    // sosshort();
+    // soslong();
+    // sosshort();
   }
 
   sosshort() {
-    int i = 0;
-    while (i <= 2) {
-      Flashlight.lightOn();
-      sleep(Duration(milliseconds: 500));
-      Flashlight.lightOff();
-      sleep(Duration(milliseconds: 500));
-
-      i++;
-    }
+    // int i = 0;
+    // while (i <= 2) {
+    //   Flashlight.lightOn();
+    //   sleep(Duration(milliseconds: 500));
+    //   Flashlight.lightOff();
+    //   sleep(Duration(milliseconds: 500));
+    //   i++;
+    // }
   }
 
   soslong() {
