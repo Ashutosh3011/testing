@@ -1,11 +1,8 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
-import 'dart:typed_data';
 import 'package:audioplayers/audio_cache.dart';
 import 'package:audioplayers/audioplayers.dart';
-import 'package:flutter_foreground_plugin_example/countDownTimer.dart';
-import 'package:torch_compat/torch_compat.dart';
 import 'dart:ui';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
@@ -69,6 +66,7 @@ class _HomeScreenState extends State<HomeScreen> {
   bool triggerSwitch;
   List<int> triggerSaved = List();
   bool _hasFlashlight = false;
+  bool stopped = false;
   AudioPlayer instance;
   AudioCache musicCache;
   int fcount = 0, tcount = 0;
@@ -307,16 +305,20 @@ class _HomeScreenState extends State<HomeScreen> {
                       child: Text("New Screen"),
                       onPressed: () {
                         Navigator.of(context).pushNamed(countDownTimer);
+                        stopped = true;
+                        print(stopped);
+                        flashlight();
                         // Navigator.of(context).pushNamed(lockScreen);
                       },
                     ),
                     RaisedButton(
                         child: Text("Get Location"),
                         onPressed: () {
-                          _getCurrentLocation();
-                          // tcount = 0;
-                          // fcount = 0;
-                          // sosflash();
+                          stopped = false;
+                          print(stopped);
+                          flashlight();
+
+                          // _getCurrentLocation();//enable this
 
                           // Navigator.of(context).pushNamed(countDownTimer);
 
@@ -445,6 +447,13 @@ class _HomeScreenState extends State<HomeScreen> {
       tcount = 0;
       fcount = 0;
       sosflash();
+      stopped = false;
+      // print(
+      //     "*******************************************************************************************************$stopped");
+
+      flashlight();
+      tcount++;
+
       // pauseMusic();
 
       return Container(
@@ -460,6 +469,8 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
       );
     } else {
+      // stopped = true;
+      // flashlight();
       print("Trigger didn't match");
 
       return Container(
@@ -478,58 +489,70 @@ class _HomeScreenState extends State<HomeScreen> {
 
   sosflash() async {
     print("flashlight is working");
-
-    // playLoopedMusic();
-    // AudioCache musicCache;
-    // AudioPlayer instance;
-
     print("loop");
 
     musicCache = AudioCache(prefix: "lib/assets/");
-    instance = await musicCache.loop("audio.mp3");
-    sosshort();
+    instance = await musicCache.loop("audio.mp3"); //audio
+    // flashlight();
   }
 
-  sosshort() {
+  void flashlight() {
+    // Timer.periodic(
+    //   const Duration(seconds: 2),
+    //   (timer) {
+    //     if (tcount <= 4) {
+    //       tcount++;
+    //       Flashlight.lightOn();
+
+    //       Flashlight.lightOff();
+    //       print(
+    //           "^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^$tcount");
+    //       if (tcount > 5) {
+    //         timer.cancel();
+    //       }
+    //     }
+    //   },
+    // );
+    // while (!stopped) {
     Future.delayed(Duration(milliseconds: 500), () {
-      TorchCompat.turnOn();
+      Flashlight.lightOn();
       Future.delayed(Duration(milliseconds: 500), () {
-        TorchCompat.turnOff();
+        Flashlight.lightOff();
         Future.delayed(Duration(milliseconds: 500), () {
-          TorchCompat.turnOn();
+          Flashlight.lightOn();
           Future.delayed(Duration(milliseconds: 500), () {
-            TorchCompat.turnOff();
+            Flashlight.lightOff();
             Future.delayed(Duration(milliseconds: 500), () {
-              TorchCompat.turnOn();
+              Flashlight.lightOn();
               Future.delayed(Duration(milliseconds: 500), () {
-                TorchCompat.turnOff();
+                Flashlight.lightOff();
                 Future.delayed(Duration(milliseconds: 1000), () {
-                  TorchCompat.turnOn();
+                  Flashlight.lightOn();
                   Future.delayed(Duration(milliseconds: 1000), () {
-                    TorchCompat.turnOff();
+                    Flashlight.lightOff();
                     Future.delayed(Duration(milliseconds: 1000), () {
-                      TorchCompat.turnOn();
+                      Flashlight.lightOn();
                       Future.delayed(Duration(milliseconds: 1000), () {
-                        TorchCompat.turnOff();
+                        Flashlight.lightOff();
                         Future.delayed(Duration(milliseconds: 1000), () {
-                          TorchCompat.turnOn();
+                          Flashlight.lightOn();
                           Future.delayed(Duration(milliseconds: 500), () {
-                            TorchCompat.turnOff();
+                            Flashlight.lightOff();
                             Future.delayed(Duration(milliseconds: 500), () {
-                              TorchCompat.turnOn();
+                              Flashlight.lightOn();
                               Future.delayed(Duration(milliseconds: 500), () {
-                                TorchCompat.turnOff();
+                                Flashlight.lightOff();
                                 Future.delayed(Duration(milliseconds: 500), () {
-                                  TorchCompat.turnOn();
+                                  Flashlight.lightOn();
                                   Future.delayed(Duration(milliseconds: 500),
                                       () {
-                                    TorchCompat.turnOff();
+                                    Flashlight.lightOff();
                                     Future.delayed(Duration(milliseconds: 500),
                                         () {
-                                      TorchCompat.turnOn();
+                                      Flashlight.lightOn();
                                       Future.delayed(
                                           Duration(milliseconds: 500), () {
-                                        TorchCompat.turnOff();
+                                        Flashlight.lightOff();
                                       });
                                     });
                                   });
@@ -548,31 +571,23 @@ class _HomeScreenState extends State<HomeScreen> {
         });
       });
     });
+    // }
+    // Timer.periodic(
+    //   const Duration(seconds: 1),
+    //   (timer1) {
+    //     if (fcount < 3) {
+    //       tcount++;
+    //       Flashlight.lightOn();
+    //       Flashlight.lightOff();
+    //       print(
+    //           "^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^$tcount");
+    //       if (fcount > 4) {
+    //         timer1.cancel();
+    //       }
+    //     }
+    //   },
+    // );
   }
-
-  soslong() async {
-    int i = 0;
-    while (i <= 2) {
-      Flashlight.lightOn();
-      await new Future.delayed(const Duration(milliseconds: 1500));
-      // sleep(Duration(milliseconds: 1500));
-      Flashlight.lightOff();
-      await new Future.delayed(const Duration(seconds: 1500));
-      // sleep(Duration(milliseconds: 1500));
-
-      i++;
-    }
-  }
-
-  // void playLoopedMusic() async {
-  //   AudioCache musicCache;
-  //   // AudioPlayer instance;
-  //   print("loop");
-
-  //   musicCache = AudioCache(prefix: "lib/assets/");
-  //   instance = await musicCache.loop("audio.mp3");
-  //   // await instance.setVolume(0.5); you can even set the volume
-  // }
 
   void pauseMusic() {
     if (instance != null) {
