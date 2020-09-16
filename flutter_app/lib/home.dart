@@ -304,6 +304,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     RaisedButton(
                       child: Text("New Screen"),
                       onPressed: () {
+                        Navigator.of(context).pushNamed(countDownTimer);
                         stopped = true;
                         print(stopped);
                         flashlight();
@@ -318,6 +319,8 @@ class _HomeScreenState extends State<HomeScreen> {
                           flashlight();
 
                           // _getCurrentLocation();//enable this
+
+                          // Navigator.of(context).pushNamed(countDownTimer);
 
                           // OneSignalAPI.configOneSignal();
                           // SendNotification("http://142.93.217.138/development/execution.php");

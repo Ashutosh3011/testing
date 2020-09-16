@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_foreground_plugin_example/countDownTimer.dart';
 import 'package:geolocator/geolocator.dart';
 import './home.dart';
 import './opt_verify.dart';
@@ -55,6 +56,7 @@ class _MyAppState extends State<MyApp> {
         customTriggerScreen: (BuildContext context) => CustomTriggerPage(),
         profileDisplay: (BuildContext context) => ProfileDisplay(),
         lockScreen: (BuildContext context) => LockScreen(),
+        countDownTimer: (BuildContext context) => CountDownTimer(),
       },
       initialRoute: splashScreen,
     );
