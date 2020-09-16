@@ -4,6 +4,7 @@ import 'dart:io';
 import 'dart:typed_data';
 import 'package:audioplayers/audio_cache.dart';
 import 'package:audioplayers/audioplayers.dart';
+import 'package:flutter_foreground_plugin_example/countDownTimer.dart';
 import 'package:torch_compat/torch_compat.dart';
 import 'dart:ui';
 import 'package:flutter/cupertino.dart';
@@ -305,7 +306,8 @@ class _HomeScreenState extends State<HomeScreen> {
                     RaisedButton(
                       child: Text("New Screen"),
                       onPressed: () {
-                        Navigator.of(context).pushNamed(lockScreen);
+                        Navigator.of(context).pushNamed(countDownTimer);
+                        // Navigator.of(context).pushNamed(lockScreen);
                       },
                     ),
                     RaisedButton(
@@ -315,6 +317,8 @@ class _HomeScreenState extends State<HomeScreen> {
                           // tcount = 0;
                           // fcount = 0;
                           // sosflash();
+
+                          // Navigator.of(context).pushNamed(countDownTimer);
 
                           // OneSignalAPI.configOneSignal();
                           // SendNotification("http://142.93.217.138/development/execution.php");
@@ -481,45 +485,69 @@ class _HomeScreenState extends State<HomeScreen> {
 
     print("loop");
 
-    // musicCache = AudioCache(prefix: "lib/assets/");
-    // instance = await musicCache.loop("audio.mp3");
-    // timer = Timer.periodic(Duration(seconds: 2), (Timer t) => Flashlight.lightOn());
-    // timer = Timer.periodic(Duration(seconds: 2), (Timer t) => sosshort());
-// TorchCompat.turnOn();
-// TorchCompat.turnOff();
-    Timer.periodic(const Duration(seconds: 1), (timer1) {
-      if (tcount >= 5) {
-        timer1.cancel();
-      }
-      // Flashlight.lightOn();
-      TorchCompat.turnOn();
-      tcount++;
-      print(tcount);
-    });
-    Timer.periodic(const Duration(seconds: 2), (timer2) {
-      if (fcount >= 5) {
-        timer2.cancel();
-      }
-      // Flashlight.lightOff();
-      TorchCompat.turnOff();
-      fcount++;
-      print(fcount);
-    });
-
-    // sosshort();
-    // soslong();
-    // sosshort();
+    musicCache = AudioCache(prefix: "lib/assets/");
+    instance = await musicCache.loop("audio.mp3");
+    sosshort();
   }
 
   sosshort() {
-    // int i = 0;
-    // while (i <= 2) {
-    //   Flashlight.lightOn();
-    //   sleep(Duration(milliseconds: 500));
-    //   Flashlight.lightOff();
-    //   sleep(Duration(milliseconds: 500));
-    //   i++;
-    // }
+    Future.delayed(Duration(milliseconds: 500), () {
+      TorchCompat.turnOn();
+      Future.delayed(Duration(milliseconds: 500), () {
+        TorchCompat.turnOff();
+        Future.delayed(Duration(milliseconds: 500), () {
+          TorchCompat.turnOn();
+          Future.delayed(Duration(milliseconds: 500), () {
+            TorchCompat.turnOff();
+            Future.delayed(Duration(milliseconds: 500), () {
+              TorchCompat.turnOn();
+              Future.delayed(Duration(milliseconds: 500), () {
+                TorchCompat.turnOff();
+                Future.delayed(Duration(milliseconds: 1000), () {
+                  TorchCompat.turnOn();
+                  Future.delayed(Duration(milliseconds: 1000), () {
+                    TorchCompat.turnOff();
+                    Future.delayed(Duration(milliseconds: 1000), () {
+                      TorchCompat.turnOn();
+                      Future.delayed(Duration(milliseconds: 1000), () {
+                        TorchCompat.turnOff();
+                        Future.delayed(Duration(milliseconds: 1000), () {
+                          TorchCompat.turnOn();
+                          Future.delayed(Duration(milliseconds: 500), () {
+                            TorchCompat.turnOff();
+                            Future.delayed(Duration(milliseconds: 500), () {
+                              TorchCompat.turnOn();
+                              Future.delayed(Duration(milliseconds: 500), () {
+                                TorchCompat.turnOff();
+                                Future.delayed(Duration(milliseconds: 500), () {
+                                  TorchCompat.turnOn();
+                                  Future.delayed(Duration(milliseconds: 500),
+                                      () {
+                                    TorchCompat.turnOff();
+                                    Future.delayed(Duration(milliseconds: 500),
+                                        () {
+                                      TorchCompat.turnOn();
+                                      Future.delayed(
+                                          Duration(milliseconds: 500), () {
+                                        TorchCompat.turnOff();
+                                      });
+                                    });
+                                  });
+                                });
+                              });
+                            });
+                          });
+                        });
+                      });
+                    });
+                  });
+                });
+              });
+            });
+          });
+        });
+      });
+    });
   }
 
   soslong() async {

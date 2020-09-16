@@ -54,6 +54,7 @@ class Gender {
       Gender(3, 'Female'),
     ];
   }
+  
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
@@ -320,6 +321,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 
   Widget genderFormField() {
+    
     large = ResponsiveWidget.isScreenLarge(_width, _pixelRatio);
     medium = ResponsiveWidget.isScreenMedium(_width, _pixelRatio);
     return Material(
